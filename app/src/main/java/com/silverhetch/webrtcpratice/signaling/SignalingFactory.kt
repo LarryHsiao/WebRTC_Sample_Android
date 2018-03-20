@@ -1,14 +1,13 @@
 package com.silverhetch.webrtcpratice.signaling
 
-import okhttp3.*
-import org.json.JSONObject
+import com.silverhetch.webrtcpratice.User.User
 
 /**
  * Created by mikes on 3/19/2018.
  */
-class SignalingFactory {
+class SignalingFactory(private val user: User) {
 
     fun singling(): Signaling {
-        return Signaling("ws://192.168.1.96:9090")
+        return SignalingImpl(user)
     }
 }
