@@ -6,30 +6,106 @@
     android:layout_height="match_parent"
     tools:context="com.silverhetch.webrtcpratice.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/main_localVideo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:minHeight="150dp"
+        app:layout_constraintBottom_toTopOf="@+id/main_controlPanelRoot"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/main_controlPanelRoot"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <GridLayout
+    <org.webrtc.SurfaceViewRenderer
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:id="@+id/main_remoteVideo"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/main_controlPanelRoot"
         android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/main_localVideo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_weight="3">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3">
+
+            <Button
+                android:id="@+id/main_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                android:minWidth="100dp"
+                android:text="Start" />
+
+            <Button
+                android:id="@+id/main_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                android:minWidth="100dp"
+                android:text="Stop" />
+
+            <Button
+                android:id="@+id/main_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                android:minWidth="100dp"
+                android:text="Login" />
+
+            <Button
+                android:id="@+id/main_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                android:minWidth="100dp"
+                android:text="call" />
+
+        </GridLayout>
+    </ScrollView>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:columnCount="4">
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
-        <Button
-            android:id="@+id/main_enter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="enter" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
-        <Button
-            android:id="@+id/main_leave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Leave" />
-    </GridLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
 </android.support.constraint.ConstraintLayout>

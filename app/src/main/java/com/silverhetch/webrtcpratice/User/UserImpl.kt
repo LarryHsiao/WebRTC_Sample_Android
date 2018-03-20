@@ -7,8 +7,8 @@ internal class UserImpl : User {
     private var userName: String = ""
     override fun userSignedIn(userName: String): User {
         this.userName = userName
-        return this
-    }
+return this
+}
 
-    override fun userName(): String = userName;
+override fun userName(): String = userName
 }
