@@ -53,7 +53,7 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
     }
 
     override fun stop() {
-        TODO()
+        peerConnection!!.close()
     }
 
     override fun call(name: String) {
@@ -116,7 +116,6 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
 
     override fun onIceConnectionChange(newState: PeerConnection.IceConnectionState?) {
         Log.i("RtcConnection", "State: " + newState!!.name)
-        // todo: other states
         if (FAILED == newState) {
             throw RuntimeException("connection failed")
         }

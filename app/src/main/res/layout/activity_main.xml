@@ -22,9 +22,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <org.webrtc.SurfaceViewRenderer
-        android:layout_width="80dp"
-        android:layout_height="45dp"
         android:id="@+id/main_remoteVideo"
+        android:layout_width="120dp"
+        android:layout_height="67.5dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,7 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="3">
+            android:columnCount="2">
 
             <Button
                 android:id="@+id/main_start"
@@ -67,6 +67,16 @@
                 android:minWidth="100dp"
                 android:text="Stop" />
 
+            <EditText
+                android:id="@+id/main_loginName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                android:hint="My name"
+                android:minWidth="100dp"
+                android:text="MyName" />
+
             <Button
                 android:id="@+id/main_login"
                 android:layout_width="wrap_content"
@@ -75,6 +85,16 @@
                 android:layout_gravity="center"
                 android:minWidth="100dp"
                 android:text="Login" />
+
+            <EditText
+                android:id="@+id/main_callTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                android:hint="Call to"
+                android:minWidth="100dp"
+                android:text="CallTo" />
 
             <Button
                 android:id="@+id/main_call"
