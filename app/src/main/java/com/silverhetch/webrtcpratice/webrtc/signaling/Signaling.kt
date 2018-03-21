@@ -15,7 +15,7 @@ interface Signaling {
     fun disconnect()
 
     interface Callback {
-        fun onOffer(offerName: String, sdp: String)
+        fun onOffer(offerName: String, remoteSdp: String)
         fun onAnswer(sdp: String)
         fun onCandidate(candidate: JSONObject)
     }

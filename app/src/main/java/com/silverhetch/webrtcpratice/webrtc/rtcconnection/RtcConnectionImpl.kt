@@ -59,6 +59,7 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
     override fun call(name: String) {
         peerConnection!!.createOffer(CreateStreamSdpObserver(object : CreateStreamSdpObserver.Callback {
             override fun onSuccess(localSdp: SessionDescription) {
+                peerConnection!!.setLocalDescription(SdpSetupObserver(), localSdp)
                 signaling!!.offer(name, JsonSdp(localSdp))
             }
         }), MediaConstraints())
@@ -95,7 +96,7 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
     }
 
     override fun onAddStream(p0: MediaStream?) {
-
+        p0!!.videoTracks[0].addRenderer(renderer!!.remoteVideo())
     }
 
     override fun onRemoveStream(p0: MediaStream?) {
@@ -103,7 +104,6 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
     }
 
     override fun onAddTrack(p0: RtpReceiver?, p1: Array<out MediaStream>?) {
-        /* ignore audio */
     }
 
     override fun onIceCandidate(candidate: IceCandidate?) {
