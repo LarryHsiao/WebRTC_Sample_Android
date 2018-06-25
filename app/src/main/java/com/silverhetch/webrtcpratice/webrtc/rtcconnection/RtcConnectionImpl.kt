@@ -37,7 +37,11 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
                         PeerConnection.IceServer.builder("stun:stun1.l.google.com:19302").createIceServer(),
                         PeerConnection.IceServer.builder("stun:stun2.l.google.com:19302").createIceServer(),
                         PeerConnection.IceServer.builder("stun:stun3.l.google.com:19302").createIceServer(),
-                        PeerConnection.IceServer.builder("stun:stun4.l.google.com:19302").createIceServer()
+                        PeerConnection.IceServer.builder("stun:stun4.l.google.com:19302").createIceServer(),
+                        PeerConnection.IceServer.builder("turn:172.105.228.27:3478")
+                                .setUsername("test")
+                                .setPassword("test")
+                                .createIceServer()
                 )), constraints, this)!!
 
         val videoCapture: VideoCapturer = VideoCaptureFactory().instance()
