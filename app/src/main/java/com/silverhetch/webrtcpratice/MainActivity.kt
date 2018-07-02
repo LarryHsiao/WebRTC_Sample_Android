@@ -7,15 +7,11 @@ import android.support.v4.app.ActivityCompat.requestPermissions
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import com.silverhetch.webrtcpratice.User.User
-import com.silverhetch.webrtcpratice.User.UserImpl
+import android.widget.*
+import com.silverhetch.webrtcpratice.user.User
+import com.silverhetch.webrtcpratice.user.UserImpl
 import com.silverhetch.webrtcpratice.webrtc.WebRtcImpl
-import org.webrtc.EglBase
-import org.webrtc.PeerConnectionFactory
-import org.webrtc.SurfaceViewRenderer
+import org.webrtc.*
 
 class MainActivity : AppCompatActivity() {
     companion object {

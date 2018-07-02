@@ -1,9 +1,7 @@
 package com.silverhetch.webrtcpratice.webrtc
 
-import com.silverhetch.webrtcpratice.User.User
-import com.silverhetch.webrtcpratice.webrtc.rtcconnection.Renderer
-import com.silverhetch.webrtcpratice.webrtc.rtcconnection.RtcConnection
-import com.silverhetch.webrtcpratice.webrtc.rtcconnection.RtcConnectionImpl
+import com.silverhetch.webrtcpratice.user.User
+import com.silverhetch.webrtcpratice.webrtc.rtcconnection.*
 import com.silverhetch.webrtcpratice.webrtc.signaling.Signaling
 import com.silverhetch.webrtcpratice.webrtc.signaling.SignalingImpl
 

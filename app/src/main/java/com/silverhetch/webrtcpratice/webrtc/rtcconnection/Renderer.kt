@@ -7,5 +7,5 @@ import org.webrtc.VideoRenderer
  */
 interface Renderer {
     fun localVideo(): VideoRenderer
-    fun remoteVideo():VideoRenderer
+    fun remoteVideo(): VideoRenderer
 }

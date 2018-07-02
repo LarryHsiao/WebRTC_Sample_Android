@@ -1,7 +1,7 @@
 package com.silverhetch.webrtcpratice.webrtc.signaling
 
 import android.util.Log
-import com.silverhetch.webrtcpratice.User.User
+import com.silverhetch.webrtcpratice.user.User
 import org.json.JSONObject
 
 /**

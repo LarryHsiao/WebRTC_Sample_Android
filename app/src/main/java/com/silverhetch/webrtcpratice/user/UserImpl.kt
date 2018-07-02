@@ -1,4 +1,4 @@
-package com.silverhetch.webrtcpratice.User
+package com.silverhetch.webrtcpratice.user
 
 /**
  * Created by mikes on 3/20/2018.
@@ -7,8 +7,8 @@ internal class UserImpl : User {
     private var userName: String = ""
     override fun userSignedIn(userName: String): User {
         this.userName = userName
-return this
-}
+        return this
+    }
 
-override fun userName(): String = userName
+    override fun userName(): String = userName
 }

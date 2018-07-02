@@ -12,8 +12,12 @@ internal class SdpSetupObserver : SdpObserver {
     override fun onSetFailure(exception: String?) {
         throw RuntimeException(exception)
     }
-    override fun onSetSuccess() {/*ignore*/ }
-    override fun onCreateSuccess(localSessionDescription: SessionDescription?) {/*ignore*/ }
+
+    override fun onSetSuccess() {/*ignore*/
+    }
+
+    override fun onCreateSuccess(localSessionDescription: SessionDescription?) {/*ignore*/
+    }
 
     override fun onCreateFailure(exception: String?) {
         throw RuntimeException(exception)

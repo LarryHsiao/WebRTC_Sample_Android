@@ -1,4 +1,4 @@
-package com.silverhetch.webrtcpratice.User
+package com.silverhetch.webrtcpratice.user
 
 /**
  * Created by mikes on 3/20/2018.
