@@ -8,7 +8,7 @@ import org.json.JSONObject
  * Created by mikes on 3/20/2018.
  */
 internal class SignalingImpl(private val user: User) : Signaling, SignalSocket.Callback {
-    private val socket: SignalSocket = SignalSocket("ws://172.105.228.27:9090", this)
+    private val socket: SignalSocket = SignalSocket("ws://192.168.1.152:9090", this)
     private var callback: Signaling.Callback? = null
 
     override fun connect(callback: Signaling.Callback) {
