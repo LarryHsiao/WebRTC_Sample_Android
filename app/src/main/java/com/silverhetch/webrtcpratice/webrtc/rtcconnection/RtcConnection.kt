@@ -7,6 +7,6 @@ import com.silverhetch.webrtcpratice.webrtc.signaling.Signaling
  */
 interface RtcConnection : Signaling.Callback {
     fun start(signaling: Signaling, renderer: Renderer)
-    fun call(name: String)
+    fun call(name: RemotePeer)
     fun stop()
 }

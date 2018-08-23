@@ -2,6 +2,7 @@ package com.silverhetch.webrtcpratice.webrtc
 
 import com.silverhetch.webrtcpratice.user.User
 import com.silverhetch.webrtcpratice.webrtc.rtcconnection.*
+import com.silverhetch.webrtcpratice.webrtc.signaling.ConstRemotePeer
 import com.silverhetch.webrtcpratice.webrtc.signaling.Signaling
 import com.silverhetch.webrtcpratice.webrtc.signaling.SignalingImpl
 
@@ -26,6 +27,6 @@ internal class WebRtcImpl(private val user: User) : WebRtc {
     }
 
     override fun call(name: String) {
-        rtcConnection.call(name)
+        rtcConnection.call(ConstRemotePeer(name))
     }
 }

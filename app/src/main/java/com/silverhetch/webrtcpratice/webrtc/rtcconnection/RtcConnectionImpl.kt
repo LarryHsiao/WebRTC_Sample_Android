@@ -1,9 +1,7 @@
 package com.silverhetch.webrtcpratice.webrtc.rtcconnection
 
 import android.util.Log
-import com.silverhetch.webrtcpratice.webrtc.signaling.JsonSdp
 import com.silverhetch.webrtcpratice.webrtc.signaling.Signaling
-import org.json.JSONObject
 import org.webrtc.*
 import org.webrtc.PeerConnection.IceConnectionState.FAILED
 import org.webrtc.PeerConnectionFactory.Options
@@ -22,7 +20,7 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
     private lateinit var peerConnection: PeerConnection
     private lateinit var signaling: Signaling
     private lateinit var renderer: Renderer
-    private var remoteName: String = ""
+    private lateinit var remoteName: RemotePeer
 
     override fun start(signaling: Signaling, renderer: Renderer) {
         this.renderer = renderer
@@ -60,25 +58,25 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
         peerConnection.close()
     }
 
-    override fun call(name: String) {
+    override fun call(remotePeer: RemotePeer) {
         peerConnection.createOffer(CreateStreamSdpObserver(object : CreateStreamSdpObserver.Callback {
             override fun onSuccess(localSdp: SessionDescription) {
                 peerConnection.setLocalDescription(SdpSetupObserver(), localSdp)
-                signaling.offer(name, JsonSdp(localSdp))
+                signaling.offer(remotePeer, localSdp)
             }
         }), MediaConstraints())
 
-        remoteName = name
+        remoteName = remotePeer
     }
 
-    override fun onOffer(offerName: String, remoteSdp: String) {
-        remoteName = offerName
+    override fun onOffer(remotePeer: RemotePeer, remoteSdp: String) {
+        remoteName = remotePeer
         // notice: the both of method using same callback definition called SdpObserver
         peerConnection.setRemoteDescription(SdpSetupObserver(), SessionDescription(OFFER, remoteSdp))
         peerConnection.createAnswer(CreateStreamSdpObserver(object : CreateStreamSdpObserver.Callback {
             override fun onSuccess(localSdp: SessionDescription) {
                 peerConnection.setLocalDescription(SdpSetupObserver(), localSdp)
-                signaling.answer(offerName, JsonSdp(localSdp))
+                signaling.answer(remotePeer, localSdp)
             }
         }), MediaConstraints())
     }
@@ -91,11 +89,11 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
         peerConnection.setRemoteDescription(SdpSetupObserver(), description)
     }
 
-    override fun onCandidate(candidate: JSONObject) {
+    override fun onCandidate(sdpMid: String, sdpMLineIndex: Int, candidate: String) {
         peerConnection.addIceCandidate(IceCandidate(
-                candidate.getString("sdpMid"),
-                candidate.getInt("sdpMLineIndex"),
-                candidate.getString("candidate")
+                sdpMid,
+                sdpMLineIndex,
+                candidate
         ))
     }
 
@@ -111,11 +109,7 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
     }
 
     override fun onIceCandidate(candidate: IceCandidate?) {
-        val json = JSONObject()
-        json.put("sdpMid", candidate!!.sdpMid)
-        json.put("sdpMLineIndex", candidate.sdpMLineIndex)
-        json.put("candidate", candidate.sdp)
-        signaling.candidate(remoteName, json)
+        signaling.candidate(remoteName, candidate)
     }
 
     override fun onIceConnectionChange(newState: PeerConnection.IceConnectionState?) {

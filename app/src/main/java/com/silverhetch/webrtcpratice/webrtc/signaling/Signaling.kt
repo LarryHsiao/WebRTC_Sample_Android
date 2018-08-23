@@ -1,6 +1,8 @@
 package com.silverhetch.webrtcpratice.webrtc.signaling
 
-import org.json.JSONObject
+import com.silverhetch.webrtcpratice.webrtc.rtcconnection.RemotePeer
+import org.webrtc.IceCandidate
+import org.webrtc.SessionDescription
 
 /**
  * Created by mikes on 3/20/2018.
@@ -8,15 +10,15 @@ import org.json.JSONObject
 interface Signaling {
     fun connect(callback: Callback)
     fun enter(name: String)
-    fun offer(name: String, jsonSdp: JsonSdp)
-    fun answer(offerName: String, jsonSdp: JsonSdp)
-    fun candidate(name: String, candidate: JSONObject)
+    fun answer(remotePeer: RemotePeer, localDescription: SessionDescription)
+    fun candidate(remotePeer: RemotePeer, candidate: IceCandidate?)
     fun leave()
     fun disconnect()
+    fun offer(remotePeer: RemotePeer, localDescription: SessionDescription)
 
     interface Callback {
-        fun onOffer(offerName: String, remoteSdp: String)
+        fun onOffer(remotePeer: RemotePeer, remoteSdp: String)
         fun onAnswer(sdp: String)
-        fun onCandidate(candidate: JSONObject)
+        fun onCandidate(sdpMid: String, sdpMLineIndex: Int, candidate: String)
     }
 }
