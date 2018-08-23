@@ -19,9 +19,9 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
         const val MEDIA_STREAM_ID = "0176"
     }
 
-    private var peerConnection: PeerConnection? = null
-    private var signaling: Signaling? = null
-    private var renderer: Renderer? = null
+    private lateinit var peerConnection: PeerConnection
+    private lateinit var signaling: Signaling
+    private lateinit var renderer: Renderer
     private var remoteName: String = ""
 
     override fun start(signaling: Signaling, renderer: Renderer) {
@@ -53,32 +53,32 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
         val stream: MediaStream = factory.createLocalMediaStream(MEDIA_STREAM_ID)
         stream.addTrack(videoTrack)
 
-        peerConnection!!.addStream(stream)
+        peerConnection.addStream(stream)
     }
 
     override fun stop() {
-        peerConnection!!.close()
+        peerConnection.close()
     }
 
     override fun call(name: String) {
-        peerConnection!!.createOffer(CreateStreamSdpObserver(object : CreateStreamSdpObserver.Callback {
+        peerConnection.createOffer(CreateStreamSdpObserver(object : CreateStreamSdpObserver.Callback {
             override fun onSuccess(localSdp: SessionDescription) {
-                peerConnection!!.setLocalDescription(SdpSetupObserver(), localSdp)
-                signaling!!.offer(name, JsonSdp(localSdp))
+                peerConnection.setLocalDescription(SdpSetupObserver(), localSdp)
+                signaling.offer(name, JsonSdp(localSdp))
             }
         }), MediaConstraints())
 
         remoteName = name
     }
 
-    override fun onOffer(offerName: String, sdp: String) {
+    override fun onOffer(offerName: String, remoteSdp: String) {
         remoteName = offerName
         // notice: the both of method using same callback definition called SdpObserver
-        peerConnection!!.setRemoteDescription(SdpSetupObserver(), SessionDescription(OFFER, sdp))
-        peerConnection!!.createAnswer(CreateStreamSdpObserver(object : CreateStreamSdpObserver.Callback {
+        peerConnection.setRemoteDescription(SdpSetupObserver(), SessionDescription(OFFER, remoteSdp))
+        peerConnection.createAnswer(CreateStreamSdpObserver(object : CreateStreamSdpObserver.Callback {
             override fun onSuccess(localSdp: SessionDescription) {
-                peerConnection!!.setLocalDescription(SdpSetupObserver(), localSdp)
-                signaling!!.answer(offerName, JsonSdp(localSdp))
+                peerConnection.setLocalDescription(SdpSetupObserver(), localSdp)
+                signaling.answer(offerName, JsonSdp(localSdp))
             }
         }), MediaConstraints())
     }
@@ -88,11 +88,11 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
                 ANSWER,
                 sdp
         )
-        peerConnection!!.setRemoteDescription(SdpSetupObserver(), description)
+        peerConnection.setRemoteDescription(SdpSetupObserver(), description)
     }
 
     override fun onCandidate(candidate: JSONObject) {
-        peerConnection!!.addIceCandidate(IceCandidate(
+        peerConnection.addIceCandidate(IceCandidate(
                 candidate.getString("sdpMid"),
                 candidate.getInt("sdpMLineIndex"),
                 candidate.getString("candidate")
@@ -100,7 +100,7 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
     }
 
     override fun onAddStream(p0: MediaStream?) {
-        p0!!.videoTracks[0].addRenderer(renderer!!.remoteVideo())
+        p0!!.videoTracks[0].addRenderer(renderer.remoteVideo())
     }
 
     override fun onRemoveStream(p0: MediaStream?) {
@@ -115,7 +115,7 @@ internal class RtcConnectionImpl : RtcConnection, PeerConnection.Observer {
         json.put("sdpMid", candidate!!.sdpMid)
         json.put("sdpMLineIndex", candidate.sdpMLineIndex)
         json.put("candidate", candidate.sdp)
-        signaling!!.candidate(remoteName, json)
+        signaling.candidate(remoteName, json)
     }
 
     override fun onIceConnectionChange(newState: PeerConnection.IceConnectionState?) {
